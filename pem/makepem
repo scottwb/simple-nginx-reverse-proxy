@@ -1,0 +1,12 @@
+#!/bin/sh
+PEMFILE=nginx.pem
+
+umask 77
+PEM1=`mktemp $TMPDIR/openssl.XXXXXX`
+PEM2=`mktemp $TMPDIR/openssl.XXXXXX`
+openssl req -newkey rsa:1024 -keyout $PEM1 -nodes -x509 -days 365 -out $PEM2 -set_serial 0
+cat $PEM1 > $PEMFILE
+echo "" >> $PEMFILE
+cat $PEM2 >> $PEMFILE
+rm $PEM1 $PEM2
+
